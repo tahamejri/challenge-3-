@@ -12,9 +12,39 @@
 //lets make an employee profile using closures
 
 function employee(name, salary) {
+    var friends = [] ;
+
     return {
         name: name,
-        salary: salary
+        salary: salary,
+        sayMyName: function(){								//this function will return the employees NAme
+        	return name ;
+
+        },
+        sayHello: function(){								
+        	console.log('hello ' + name) ;
+        },	
+        increaseSalary: function(n){						//when invoked increaseSalary will add the input number to the object's salary
+        	salary+= n ;
+        	return 'your salary is ' + salary + '$' ;		//then will return the new salary
+        },
+        addFriend: function(obj){							//for this function we made an empty array 'friends', this array will contain the friends that we will add to an employee
+        	friends.push(obj) ;
+        	if(friends.length === 1){									//if our employee have only one friend we will return you become friends with X
+        		return 'you just became friend with ' + obj.name ;	
+        	}
+        	else{													//in case our employee have multiple friends, we add their name to a new array
+        		var friendsName = [] ;
+        		for(var obj of friends){							
+        			friendsName.push(obj.name)
+        		}
+        		return 'you are friends with ' + friendsName.join(' and ') ;	//  and we return their names with "and" between them
+        	}
+        },
+        howManyFriends: function(){						//this function will return the length of the array containing the employee friends
+        	return 'you have ' + friends.length + ' friends.'
+        }
+
     }
 }
 
@@ -67,11 +97,42 @@ var employeeC = employee("Sara", 150);
 // f- in order to change the state of the pet, create a function called changeState, when called it will make the pet avaliablity true,
 //    and when called again it will make it false.
 
+function Pet(name){
+	var obj = {}
+	
+	obj.name = name ;
+	obj.addInfo = petInfo ;
+	obj.increaseAge = addAge ;
+	obj.availability = false ;
+	obj.checkState = checkSt ;
+	obj.changeState = stateChange ;
+	return obj
+}
+
+var petInfo = function (age, owner, gender, species){			//this function affects infos to the invoked obj
+	this.age = age ;		
+	this.owner = owner ;
+	this.gender = gender ;
+	this.species = species ;
+}
+
+var addAge = function(n){						
+	this.age += n ;
+}
+
+var checkSt = function(){
+	return this.availability ;
+}
+
+var stateChange = function(){							//this function changes the value of availability to its opposite, if true it becomes false and if false it becomes true
+	this.availability = !this.availability
+}
 
 // Write your code here .....
 
 
 // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
+// Yes I am ;)
 
 //=============================================================================
 /*                                  Q3                                       */
@@ -103,6 +164,15 @@ function reduce(array, f, acc) {
 
 // Write your code here .....
 
+function max(array){
+	return reduce(array,function(acc,element){				//for each element of the array, we compare it to our accumilator, and the accumulator takes whatever value higher than it.
+		if(element > acc){
+			acc = element ;
+		}
+		return acc ;
+	})
+}
+
 
 
 
@@ -123,7 +193,7 @@ function reduce(array, f, acc) {
  //    f. create an input text and a button called Add.
 
 
-// Create css file and link it to your HTML file, and write css code for the following: 
+// Create css file and link it to your HTML file, and wriet css code for the following: 
 //     a. Change the background color for the whole page.
 //     b. Change the font family for the header of the page.  
 //     c. Enlarge the input text (both: width & height).
